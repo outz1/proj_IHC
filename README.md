@@ -85,9 +85,7 @@ HTML, CSS e JavaScript puros, sem frameworks. Node.js (módulos nativos `http`, 
 ## Autoria
 
 Integrantes:
-- Eduardo de Brito
-- Rian Santana
-- Marcos Paulo Caetano
+- Eduardo de Brito;
+- Rian Santana';
+- Marcos Paulo Caetano;
 
----
-Disciplina de IHC, Prof. Dirson S. Campos, UFG.
