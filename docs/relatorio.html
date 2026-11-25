@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório de apoio: Organizador Acadêmico Inteligente</title>
+<style>
+@page{size:A4;margin:16mm 15mm}
+*{box-sizing:border-box}
+body{font:10.5pt/1.5 "Segoe UI",Arial,sans-serif;color:#151a2d;margin:0}
+h1{font-size:26pt;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:15pt;margin:26px 0 8px;padding-bottom:4px;border-bottom:2px solid #4f46e5;color:#312e81;page-break-after:avoid}
+h3{font-size:11.5pt;margin:16px 0 6px;color:#3730a3;page-break-after:avoid}
+p{margin:6px 0}ul,ol{margin:6px 0;padding-left:20px}li{margin:2px 0}
+.capa{min-height:250mm;display:flex;flex-direction:column;justify-content:center;page-break-after:always;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed 60%,#c026d3);color:#fff;padding:28mm 18mm;border-radius:10px}
+.capa img{width:88px;height:88px;border-radius:22px;margin-bottom:20px}
+.capa h1{font-size:30pt;color:#fff}.capa p{font-size:12pt;opacity:.95}
+.capa .meta{margin-top:30px;font-size:10.5pt;line-height:1.8}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:9.5pt}
+th,td{border:1px solid #cfd4e6;padding:5px 8px;vertical-align:top;text-align:left}
+th{background:#eef0ff;color:#312e81}
+tr{page-break-inside:avoid}
+.box{border-left:4px solid #4f46e5;background:#f3f4ff;padding:8px 12px;margin:10px 0;border-radius:4px;page-break-inside:avoid}
+.aviso{border-left-color:#b45309;background:#fff7ea}
+.ok{color:#166534;font-weight:600}.bad{color:#b91c1c;font-weight:600}
+figure{margin:10px 0;text-align:center;page-break-inside:avoid}
+figure img{max-width:100%;border:1px solid #cfd4e6;border-radius:6px}
+figcaption{font-size:9pt;color:#586179;margin-top:3px}
+.duas{display:flex;gap:10px;align-items:flex-start}.duas figure{flex:1}.duas figure.est{flex:0 0 32%}
+.slide{border:1px solid #cfd4e6;border-radius:6px;padding:7px 12px;margin:8px 0;page-break-inside:avoid}
+.slide b.n{display:inline-block;background:#4f46e5;color:#fff;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;font-size:9.5pt;margin-right:6px}
+.slide .t{font-weight:700}.slide small{color:#586179}
+.quebra{page-break-before:always}
+code{background:#eef0ff;padding:0 4px;border-radius:3px;font-size:9.5pt}
+.pre{font-family:Consolas,monospace;font-size:9pt;background:#f6f7fb;border:1px solid #cfd4e6;padding:8px;border-radius:4px;white-space:pre}
+.linha{border-bottom:1px solid #9aa3bf;height:20px}
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="capa">
+  <img src="img/logo.svg" alt="">
+  <h1>Organizador Acadêmico Inteligente</h1>
+  <p>Relatório de apoio para a apresentação do Projeto Final</p>
+  <p>Disciplina de Interação Humano-Computador (IHC)<br>Instituto de Informática, Universidade Federal de Goiás<br>Professor: Dirson S. Campos</p>
+  <div class="meta">Integrantes do grupo: ______________________________________<br>
+  Documento gerado em 24 de novembro de 2026<br>
+  Tipo de aplicativo: aplicação para a Web</div>
+</section>
+
+<h2>Como usar este documento</h2>
+<p>Este relatório reúne o que você precisa para montar os slides: o que o sistema faz, por que foi desenhado assim, como cada decisão se liga a princípios de IHC, o que já foi verificado e o que ainda falta. No final há uma proposta de roteiro de slides, um roteiro de demonstração ao vivo e perguntas prováveis da banca.</p>
+<div class="box aviso"><b>Leia antes de apresentar.</b> Este documento separa três tipos de informação. <b>Fato verificado</b>: foi medido ou testado de fato e o resultado está registrado aqui. <b>Decisão de projeto</b>: escolha justificada, sem medição. <b>A fazer</b>: precisa ser feito pelo grupo, como o teste de usabilidade com pessoas reais. Não apresente como resultado algo que está marcado como "a fazer".</div>
+
+<h2>1. Visão geral do projeto</h2>
+<table>
+<tr><th style="width:28%">Item</th><th>Descrição</th></tr>
+<tr><td>Proposta</td><td>Aplicação web de organização acadêmica para estudantes universitários: cadastrar disciplinas, registrar provas e trabalhos, organizar tarefas por prazo e prioridade, ver os compromissos em um calendário e acompanhar um painel de pendentes e concluídas.</td></tr>
+<tr><td>Público-alvo</td><td>Estudantes universitários.</td></tr>
+<tr><td>Objetivo principal</td><td>Facilitar o planejamento da rotina acadêmica e o acompanhamento de prazos e atividades, evitando esquecimentos.</td></tr>
+<tr><td>Tipo</td><td>Aplicação para a Web, acessada pelo navegador.</td></tr>
+<tr><td>"Dinâmico"</td><td>A interface reage às ações do usuário sem recarregar a página: criar, editar, concluir, filtrar, trocar de tela e de tema, tudo atualiza na hora. Os dados persistem entre sessões.</td></tr>
+<tr><td>Tecnologia</td><td>HTML, CSS e JavaScript puros, sem frameworks. Servidor local em Node.js sem dependências externas, que grava os dados em um arquivo JSON. Service worker para funcionar offline.</td></tr>
+</table>
+
+<figure><img src="img/painel-claro.png" alt="Painel"><figcaption>Figura 1. Painel: saudação, lembretes, contadores, progresso e próximos prazos.</figcaption></figure>
+
+<h2>2. Funcionalidades</h2>
+<table>
+<tr><th style="width:24%">Área</th><th>O que o usuário faz</th></tr>
+<tr><td>Cadastro do aluno</td><td>Na primeira visita informa nome, curso (opcional) e tema. A partir daí a interface o chama pelo nome. Pode editar tudo depois, no perfil.</td></tr>
+<tr><td>Painel</td><td>Saudação por horário, mensagem que muda conforme a situação, lembretes de hoje e amanhã, quatro contadores, barra de progresso geral, lista de próximos prazos e lista de atrasadas.</td></tr>
+<tr><td>Atividades</td><td>Cria, edita, conclui e exclui provas, trabalhos e tarefas, com disciplina, prioridade, prazo e observações. Busca por título e filtros por disciplina, tipo e situação. Três ordenações, entre elas a "inteligente".</td></tr>
+<tr><td>Disciplinas</td><td>Cadastra disciplinas com uma cor própria. A cor aparece em toda atividade e no calendário.</td></tr>
+<tr><td>Calendário</td><td>Visão mensal com pontos coloridos nos dias com compromisso. Clicar no dia lista as atividades dele e já pré-preenche a data ao criar uma nova.</td></tr>
+<tr><td>Desfazer</td><td>Excluir atividade ou disciplina é imediato e mostra "Desfazer" por 7 segundos.</td></tr>
+<tr><td>Lembretes</td><td>Destaque no painel para o que vence hoje e amanhã. Opcionalmente, notificação do navegador uma vez por dia.</td></tr>
+<tr><td>Acessibilidade</td><td>Três tamanhos de texto, modo de alto contraste, tema claro e escuro, navegação por teclado, respeito a "reduzir movimento".</td></tr>
+<tr><td>Dados</td><td>Salvos em arquivo no computador do usuário. Exportar e importar backup em JSON. Funciona offline.</td></tr>
+</table>
+
+<h3>Ordem inteligente: como funciona</h3>
+<p>Cada atividade recebe uma pontuação: urgência do prazo (atrasada vale 100; depois, 30 menos 2 pontos por dia restante, nunca abaixo de 0) mais 10 vezes a prioridade (1 a 3) mais um bônus por tipo (prova 8, trabalho 4, tarefa 0). O resultado reduz a decisão do usuário: o que está no topo da lista é o que merece atenção primeiro. Isso é uma regra simples e explicável, não inteligência artificial; na apresentação, chame de "ordenação inteligente baseada em regras".</p>
+
+<div class="duas">
+<figure><img src="img/atividades.png" alt="Atividades"><figcaption>Figura 2. Atividades com busca, filtros e ordem inteligente.</figcaption></figure>
+<figure><img src="img/calendario.png" alt="Calendário"><figcaption>Figura 3. Calendário mensal com pontos por disciplina.</figcaption></figure>
+</div>
+
+<h2>3. Persona e cenário de uso</h2>
+<div class="box aviso"><b>Atenção:</b> a persona abaixo é um exemplo ilustrativo construído pelo assistente para você adaptar. Ela não vem de entrevistas. Se o grupo conversar com estudantes de verdade, troque pelos dados reais e diga na apresentação que a persona foi baseada em entrevistas.</div>
+<table>
+<tr><th style="width:24%">Persona (exemplo)</th><td><b>Marina, 20 anos, 4º período de Engenharia de Software.</b> Cursa cinco disciplinas, mora com a família e usa o notebook e o celular. Hoje anota prazos no grupo de mensagens da turma e em um caderno.</td></tr>
+<tr><th>Necessidades</th><td>Ver tudo o que vence na semana em um só lugar; saber o que fazer primeiro; não perder prazo por esquecimento; usar sem curva de aprendizado.</td></tr>
+<tr><th>Frustrações</th><td>Prazos espalhados em várias fontes; descobrir tarde que algo venceu; aplicativos complexos demais para uso rápido.</td></tr>
+<tr><th>Cenário</th><td>Domingo à noite, Marina abre o Organizador. O painel mostra dois lembretes para segunda e terça, e a lista "Próximos prazos" já vem ordenada. Ela cadastra a prova de Cálculo, escolhe o dia no calendário, marca prioridade alta e fecha. Na quarta, conclui uma lista de exercícios com um clique e vê a barra de progresso avançar.</td></tr>
+</table>
+
+<h2 class="quebra">4. Decisões de design e justificativas</h2>
+<table>
+<tr><th style="width:26%">Decisão</th><th>Justificativa em IHC</th></tr>
+<tr><td>Tela de boas-vindas com nome</td><td>Cria vínculo e personaliza a experiência (saudação, avatar com iniciais). Pede só o essencial: o nome é o único campo obrigatório, para reduzir a barreira de entrada. Oferece "dados de exemplo" para o usuário explorar sem esforço.</td></tr>
+<tr><td>Painel como tela inicial</td><td>Responde primeiro à pergunta do estudante: "o que preciso fazer agora?". Apresenta resumo antes de detalhe.</td></tr>
+<tr><td>Cor por disciplina</td><td>Reconhecimento visual rápido. A cor nunca é a única informação: o nome da disciplina sempre aparece escrito.</td></tr>
+<tr><td>Prazo em linguagem natural</td><td>"vence hoje", "amanhã", "em 3d", "atrasada 2d" em vez de só datas. Reduz o esforço mental de calcular.</td></tr>
+<tr><td>Desfazer no lugar de confirmar</td><td>Um diálogo "Tem certeza?" interrompe e é respondido no automático. Excluir na hora com desfazer é mais rápido e mais seguro, pois o erro é reversível.</td></tr>
+<tr><td>Estados vazios com ação</td><td>Quando não há nada, a tela mostra o próximo passo em um botão ("Cadastrar disciplina", "Criar atividade", "Limpar filtros"). Evita beco sem saída.</td></tr>
+<tr><td>Feedback para cada ação</td><td>Aviso curto confirma o que aconteceu ("Atividade criada", "Concluída!"). Barra de progresso e contadores mudam na hora.</td></tr>
+<tr><td>Transições curtas</td><td>Entrada suave das telas, resposta ao passar o mouse, checkbox animado. Dão continuidade e sensação de resposta. Tudo é desligado se o usuário pede "reduzir movimento".</td></tr>
+<tr><td>Navegação inferior no celular</td><td>As abas ficam ao alcance do polegar. O layout é responsivo em um único código.</td></tr>
+<tr><td>Dados no computador do usuário</td><td>Privacidade e propriedade: nada sai da máquina. O perfil diz onde os dados estão salvos, o que reforça a transparência.</td></tr>
+</table>
+
+<div class="duas">
+<figure class="est"><img src="img/welcome.png" alt="Boas-vindas"><figcaption>Figura 4. Boas-vindas.</figcaption></figure>
+<figure><img src="img/painel-vazio.png" alt="Estado vazio"><figcaption>Figura 5. Estado vazio com ação.</figcaption></figure>
+</div>
+
+<h2 class="quebra">5. Heurísticas de Nielsen aplicadas</h2>
+<p>Esta é a tabela mais útil para a apresentação: cada heurística ligada a algo que existe no sistema. As marcas "parcial" indicam o que ainda não foi feito.</p>
+<table>
+<tr><th style="width:4%">#</th><th style="width:22%">Heurística</th><th>Onde aparece no sistema</th></tr>
+<tr><td>1</td><td>Visibilidade do estado do sistema</td><td>Barra de progresso e contadores no painel; avisos após cada ação; aba atual destacada; selo "atrasada"; o perfil informa onde os dados estão salvos; aviso quando o servidor cai e os dados passam a ficar só no navegador.</td></tr>
+<tr><td>2</td><td>Correspondência com o mundo real</td><td>Vocabulário do estudante (disciplina, prova, trabalho, prazo); calendário mensal familiar; datas no formato dd/mm/aaaa; "vence amanhã".</td></tr>
+<tr><td>3</td><td>Controle e liberdade do usuário</td><td>Desfazer exclusão; Cancelar em todos os diálogos; reabrir atividade concluída; editar tudo; Cancelar no perfil desfaz até os ajustes de acessibilidade já visualizados.</td></tr>
+<tr><td>4</td><td>Consistência e padrões</td><td>Mesmo componente de item em todas as telas; mesmas cores para ações iguais; padrões web conhecidos (abas, diálogos, caixa de seleção).</td></tr>
+<tr><td>5</td><td>Prevenção de erros</td><td>Campos obrigatórios e limites de tamanho; seletor de data em vez de digitação; o sistema leva à tela de disciplinas se não houver nenhuma; importar backup valida o formato e pede confirmação; "Apagar tudo" pede confirmação.</td></tr>
+<tr><td>6</td><td>Reconhecimento em vez de memorização</td><td>Filtros e opções sempre visíveis; lembretes e próximos prazos no painel; cor e nome da disciplina em cada item.</td></tr>
+<tr><td>7</td><td>Flexibilidade e eficiência de uso</td><td>Ordem inteligente; busca e filtros; clique no dia do calendário pré-preenche a data; botão "Nova atividade" sempre visível. <b>Parcial:</b> não há atalhos de teclado.</td></tr>
+<tr><td>8</td><td>Estética e design minimalista</td><td>Poucos elementos por tela, hierarquia clara, espaço em branco, uma cor de destaque, tema escuro.</td></tr>
+<tr><td>9</td><td>Ajudar a reconhecer, diagnosticar e corrigir erros</td><td>Mensagens em linguagem simples ("Arquivo de backup inválido", "Cadastre uma disciplina primeiro", "Servidor indisponível. Salvando só no navegador"); estados vazios que indicam a saída.</td></tr>
+<tr><td>10</td><td>Ajuda e documentação</td><td><b>Parcial:</b> não há tela de ajuda. A orientação está embutida: texto de boas-vindas, estados vazios e a explicação sobre armazenamento no perfil.</td></tr>
+</table>
+
+<h2 class="quebra">6. Acessibilidade</h2>
+<h3>O que foi implementado</h3>
+<ul>
+<li>Idioma da página declarado (pt-BR) e link "Pular para o conteúdo".</li>
+<li>Todos os campos têm rótulo; botões só com ícone têm nome acessível (<code>aria-label</code>).</li>
+<li>Barra de progresso com <code>role="progressbar"</code> e valores; avisos em região <code>aria-live</code>, lidos por leitores de tela; aba atual marcada com <code>aria-current</code>.</li>
+<li>Foco visível em todos os elementos interativos e uso completo por teclado; diálogos nativos que prendem o foco.</li>
+<li>Texto em três tamanhos (100%, 115%, 130%) e modo de alto contraste, ambos em tela, com efeito imediato.</li>
+<li>Respeito à preferência do sistema "reduzir movimento".</li>
+<li>Prazo e prioridade sempre aparecem em texto, não só em cor.</li>
+</ul>
+
+<h3>Contraste de cores (fato verificado)</h3>
+<p>Razões calculadas pela fórmula de luminância relativa da WCAG 2.x. O mínimo para texto normal no nível AA é <b>4,5:1</b>.</p>
+<table>
+<tr><th>Par de cores</th><th>Tema claro</th><th>Tema escuro</th></tr>
+<tr><td>Texto principal sobre fundo</td><td>15,98</td><td>16,19</td></tr>
+<tr><td>Texto principal sobre cartão</td><td>17,25</td><td>14,65</td></tr>
+<tr><td>Texto secundário sobre cartão</td><td>6,17</td><td>6,73</td></tr>
+<tr><td>Texto secundário sobre fundo</td><td>5,72</td><td>7,43</td></tr>
+<tr><td>Aba ativa (cor de destaque sobre fundo suave)</td><td>5,55</td><td>4,98</td></tr>
+<tr><td>Selo verde (concluído/baixa)</td><td>5,56</td><td>7,10</td></tr>
+<tr><td>Selo laranja (média)</td><td>5,50</td><td>7,38</td></tr>
+<tr><td>Selo vermelho (alta/atrasada)</td><td>4,93</td><td>4,96</td></tr>
+<tr><td>Botão primário (branco sobre roxo)</td><td colspan="2">6,29 e 5,70 (as duas pontas do gradiente, iguais nos dois temas)</td></tr>
+</table>
+<div class="box"><b>Boa história para a apresentação: o teste mudou o design.</b> A primeira medição encontrou dois problemas. Os selos verde e laranja do tema claro tinham 4,05:1 e 4,01:1, abaixo do mínimo; foram escurecidos e subiram para 5,56 e 5,50. No tema escuro, o botão primário usava texto branco sobre um roxo claro, com apenas 2,98:1; passou a usar sempre o roxo escuro, com 6,29:1.</div>
+
+<div class="duas">
+<figure><img src="img/painel-escuro-grande.png" alt="Escuro e texto grande"><figcaption>Figura 6. Tema escuro com texto em 115%.</figcaption></figure>
+<figure><img src="img/perfil-acess.png" alt="Perfil"><figcaption>Figura 7. Perfil com alto contraste e texto 130% ativos.</figcaption></figure>
+</div>
+
+<h3>Limitações honestas</h3>
+<ul>
+<li>A auditoria do Lighthouse e o teste com leitor de tela (NVDA) <b>não foram executados</b>. Fazer ambos antes de apresentar e anotar a pontuação real.</li>
+<li>Itens concluídos ficam atenuados de propósito (opacidade de 75%); o contraste nesse estado não foi medido.</li>
+<li>O calendário é navegável por Tab, mas não por setas.</li>
+<li>Os números acima são do tema padrão; o modo de alto contraste não teve as razões medidas.</li>
+</ul>
+
+<h2 class="quebra">7. Arquitetura e persistência</h2>
+<div class="pre">Navegador (HTML + CSS + JS)  <-- GET/PUT /api/dados -->  server.js (Node, 127.0.0.1:3000)  --> data/db.json
+        |
+        +-- localStorage (cópia de reserva)        +-- sw.js (service worker: abre offline)</div>
+<ul>
+<li><b>Salvamento duplo:</b> toda alteração vai para o <code>localStorage</code> e, se o servidor está ativo, para o arquivo <code>data/db.json</code>, com gravação atômica (arquivo temporário e renomeação).</li>
+<li><b>Resiliência:</b> se o servidor cair, o app continua e avisa. Ao voltar, vence o registro mais recente (campo <code>atualizado</code>), então edições feitas offline não se perdem.</li>
+<li><b>Segurança do servidor local:</b> escuta apenas em 127.0.0.1; serve só <code>index.html</code>, <code>css/</code>, <code>js/</code> e <code>public/</code>; valida o formato antes de gravar; limita o tamanho do corpo da requisição; o conteúdo digitado pelo usuário é escapado antes de ir para a tela.</li>
+<li><b>Offline:</b> o service worker guarda os arquivos do app. Sem rede o app abre; os dados vêm do <code>localStorage</code>. A fonte Inter vem do Google Fonts: é preciso rede na primeira visita para baixá-la; sem ela, o navegador usa a fonte do sistema.</li>
+<li><b>Backup:</b> exportar e importar JSON no perfil.</li>
+</ul>
+<p><b>Como rodar:</b> dar dois cliques em <code>iniciar.bat</code> ou executar <code>node server.js</code> e abrir <code>http://localhost:3000</code>. Abrir o <code>index.html</code> direto funciona, mas só com <code>localStorage</code> e sem modo offline.</p>
+
+<h2>8. O que foi verificado</h2>
+<p>Foram executados <b>35 testes automatizados de interface</b> em um navegador Edge real (modo headless), controlado por script. Resultado: <span class="ok">35 de 35 passaram, sem nenhum erro de JavaScript</span>. Eles cobrem:</p>
+<ul>
+<li>Primeira visita: tela de boas-vindas, validação do nome obrigatório, entrada no app, saudação, avatar com iniciais, tema escolhido.</li>
+<li>Estados vazios e seus botões de ação; criação de disciplina e de atividade; busca sem resultado e "Limpar filtros".</li>
+<li>Desfazer exclusão de atividade e de disciplina (com suas atividades).</li>
+<li>Acessibilidade: texto grande e alto contraste aplicam, "Cancelar" desfaz, "Salvar" mantém.</li>
+<li>Persistência: configurações e dados chegam ao servidor; após recarregar a página o usuário continua o mesmo; service worker registrado.</li>
+<li>Servidor (testado à parte, com requisições diretas e não entre os 35): respostas corretas para dados ausentes, formato inválido e requisição sem JSON; tentativas de acessar <code>server.js</code>, <code>data/</code> e caminhos com <code>../</code> são bloqueadas; os dados sobrevivem a reinício.</li>
+<li>Layout de celular conferido por captura de tela (a verificação encontrou e corrigiu um defeito: a barra de abas aparecia sobre o cabeçalho).</li>
+</ul>
+<div class="box aviso">Estes são testes técnicos feitos por script. <b>Eles não substituem o teste de usabilidade com pessoas</b>, que é o que a disciplina mais valoriza. Veja a próxima seção.</div>
+<div class="duas">
+<figure class="est"><img src="img/mobile.png" alt="Celular"><figcaption>Figura 8. Versão para celular.</figcaption></figure>
+<figure><img src="img/undo.png" alt="Desfazer"><figcaption>Figura 9. Aviso "Atividade excluída. Desfazer".</figcaption></figure>
+</div>
+
+<h2 class="quebra">9. Teste de usabilidade (a fazer pelo grupo)</h2>
+<p>Esta é a parte de maior valor para a nota e ainda não foi feita. Abaixo, um protocolo pronto. Com 5 participantes costuma-se encontrar cerca de 85% dos problemas de usabilidade (Nielsen e Landauer, 1993).</p>
+<h3>Preparação</h3>
+<ul>
+<li><b>Participantes:</b> 5 estudantes universitários que nunca viram o sistema. Anote curso e período.</li>
+<li><b>Ambiente:</b> app limpo (apague o <code>data/db.json</code> antes de cada pessoa) e tela do participante gravada, se ele concordar.</li>
+<li><b>Roteiro de abertura:</b> "Estamos testando o sistema, não você. Pense em voz alta. Não vamos ajudar durante as tarefas. Você pode parar quando quiser."</li>
+</ul>
+<h3>Tarefas</h3>
+<table>
+<tr><th style="width:5%">#</th><th>Tarefa dada ao participante</th><th style="width:30%">Sucesso quando</th></tr>
+<tr><td>T1</td><td>Crie seu cadastro e cadastre a disciplina "Cálculo 2".</td><td>Disciplina aparece na lista.</td></tr>
+<tr><td>T2</td><td>Registre uma prova de Cálculo 2 para daqui a 5 dias, com prioridade alta.</td><td>Atividade criada com tipo, data e prioridade corretos.</td></tr>
+<tr><td>T3</td><td>Marque uma tarefa como concluída.</td><td>Item fica concluído e o progresso sobe.</td></tr>
+<tr><td>T4</td><td>Descubra o que vence nesta semana.</td><td>Aponta lembretes, próximos prazos ou calendário.</td></tr>
+<tr><td>T5</td><td>Exclua uma atividade por engano e recupere.</td><td>Usa "Desfazer".</td></tr>
+<tr><td>T6</td><td>Deixe o texto maior e ative o tema escuro.</td><td>Abre o perfil e altera ambos.</td></tr>
+</table>
+<h3>Registro por participante (copie uma tabela por pessoa)</h3>
+<table>
+<tr><th>Tarefa</th><th>Concluiu? (S/N)</th><th>Tempo (s)</th><th>Erros / hesitações</th><th>Comentário</th></tr>
+<tr><td>T1</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>T2</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>T3</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>T4</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>T5</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>T6</td><td></td><td></td><td></td><td></td></tr>
+</table>
+
+<h3>Questionário SUS (System Usability Scale)</h3>
+<p>Ao final, peça que o participante responda cada afirmação de 1 (discordo totalmente) a 5 (concordo totalmente).</p>
+<ol>
+<li>Acho que gostaria de usar este sistema com frequência.</li>
+<li>Considerei o sistema mais complexo do que o necessário.</li>
+<li>Achei o sistema fácil de usar.</li>
+<li>Acho que precisaria de ajuda de uma pessoa técnica para conseguir usar o sistema.</li>
+<li>Achei que as várias funções do sistema estavam bem integradas.</li>
+<li>Achei que havia muita inconsistência no sistema.</li>
+<li>Imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente.</li>
+<li>Considerei o sistema muito complicado de usar.</li>
+<li>Senti-me muito confiante ao usar o sistema.</li>
+<li>Precisei aprender muitas coisas antes de conseguir usar o sistema.</li>
+</ol>
+<div class="box"><b>Cálculo do SUS.</b> Para as perguntas ímpares (1, 3, 5, 7, 9), subtraia 1 da resposta. Para as pares (2, 4, 6, 8, 10), subtraia a resposta de 5. Some os dez valores e multiplique por 2,5. O resultado vai de 0 a 100. A média de referência na literatura é cerca de 68; acima disso é considerado acima da média. Calcule a nota de cada pessoa e depois a média do grupo.</div>
+
+<h3>Como apresentar os resultados</h3>
+<ul>
+<li>Taxa de sucesso por tarefa (quantos concluíram), tempo médio e principais pontos de dificuldade.</li>
+<li>SUS médio e o valor de cada participante.</li>
+<li><b>Um problema encontrado e a mudança feita por causa dele</b> (antes e depois). É o que mostra o ciclo de design.</li>
+</ul>
+<p>Se não for possível testar com 5 pessoas, teste com 2 ou 3 e diga o tamanho real da amostra. Nunca invente números.</p>
+
+<h2 class="quebra">10. Roteiro de slides sugerido</h2>
+<p>Doze slides, para cerca de 10 a 12 minutos. Ajuste ao tempo que o professor der.</p>
+<div class="slide"><b class="n">1</b><span class="t">Capa</span><br>Nome do projeto, logo, integrantes, disciplina e professor. <small>Use a logo da pasta public.</small></div>
+<div class="slide"><b class="n">2</b><span class="t">O problema</span><br>Estudantes controlam prazos em lugares diferentes e esquecem. Uma frase de impacto e, se tiver, um dado de entrevista com colegas.</div>
+<div class="slide"><b class="n">3</b><span class="t">Público e persona</span><br>Quem usa, o que precisa, o que o frustra. Cenário de uso em duas linhas (seção 3).</div>
+<div class="slide"><b class="n">4</b><span class="t">A solução</span><br>Uma captura do painel (Figura 1) e quatro funcionalidades em tópicos curtos (seção 2).</div>
+<div class="slide"><b class="n">5</b><span class="t">Decisões de design</span><br>Três ou quatro decisões com a justificativa: desfazer em vez de confirmar, estados vazios com ação, prazo em linguagem natural, cor por disciplina (seção 4).</div>
+<div class="slide"><b class="n">6</b><span class="t">Heurísticas de Nielsen</span><br>Tabela da seção 5, resumida: heurística e o recurso que a atende. Destaque 1, 3, 5 e 9.</div>
+<div class="slide"><b class="n">7</b><span class="t">Acessibilidade</span><br>Tamanho de texto, alto contraste, teclado, leitor de tela, reduzir movimento. Mostre a tabela de contraste e a história do que foi corrigido (seção 6).</div>
+<div class="slide"><b class="n">8</b><span class="t">Funciona offline e guarda seus dados</span><br>Diagrama da seção 7 e a mensagem: os dados são do usuário, ficam no computador dele.</div>
+<div class="slide"><b class="n">9</b><span class="t">Demonstração ao vivo</span><br>Roteiro abaixo. Tenha uma captura de tela reserva caso algo falhe.</div>
+<div class="slide"><b class="n">10</b><span class="t">Avaliação com usuários</span><br>Método, tarefas, resultados reais e SUS (seção 9). <small>Só inclua números que o grupo coletou.</small></div>
+<div class="slide"><b class="n">11</b><span class="t">Limitações e próximos passos</span><br>Contas de usuário e sincronização entre dispositivos, atalhos de teclado, tela de ajuda, notificações com o app fechado, auditoria com leitor de tela.</div>
+<div class="slide"><b class="n">12</b><span class="t">Conclusão e perguntas</span><br>Uma frase de fechamento ligando o resultado ao objetivo: ajudar o estudante a planejar e não esquecer prazos.</div>
+
+<h3>Roteiro de demonstração ao vivo (3 minutos)</h3>
+<ol>
+<li>Abrir o app pelo <code>iniciar.bat</code>. Mostrar a tela de boas-vindas e cadastrar o nome.</li>
+<li>Mostrar o estado vazio e criar uma disciplina pelo botão sugerido.</li>
+<li>Criar uma prova pelo calendário: clicar no dia, ver a data já preenchida.</li>
+<li>Voltar ao painel: lembretes, contadores e barra de progresso mudando.</li>
+<li>Concluir uma tarefa (animação do checkbox). Excluir outra e clicar em "Desfazer".</li>
+<li>Abrir o perfil: tema escuro, texto maior, alto contraste. Fechar e reabrir o navegador para provar que os dados permanecem.</li>
+<li>Reduzir a janela para mostrar a versão de celular.</li>
+</ol>
+<div class="box"><b>Antes de apresentar:</b> teste tudo na máquina que será usada; deixe o <code>data/db.json</code> com dados de exemplo (use "Entrar com dados de exemplo"); tenha as capturas deste relatório como plano B; confirme que o Node.js está instalado.</div>
+
+<h2 class="quebra">11. Perguntas prováveis da banca</h2>
+<table>
+<tr><th style="width:38%">Pergunta</th><th>Resposta sugerida</th></tr>
+<tr><td>Por que não usaram um framework?</td><td>O escopo é pequeno e o foco é a experiência do usuário. Código simples facilita a manutenção, carrega rápido e dispensa instalação de dependências.</td></tr>
+<tr><td>Isso é inteligência artificial?</td><td>Não. A "ordem inteligente" é uma regra explicável (prazo, prioridade e tipo). Preferimos uma regra transparente a uma caixa-preta, já que o usuário precisa confiar na ordem.</td></tr>
+<tr><td>E se o usuário limpar o navegador?</td><td>Com o servidor local, os dados ficam em arquivo e não dependem do navegador. Há também exportação e importação de backup.</td></tr>
+<tr><td>Funciona com vários usuários?</td><td>Hoje é de uso pessoal, um perfil por instalação. Contas e sincronização estão nos próximos passos.</td></tr>
+<tr><td>Como garantiram a acessibilidade?</td><td>Medimos o contraste por fórmula da WCAG, corrigimos o que falhou, oferecemos texto maior e alto contraste e testamos o uso por teclado. <i>Cite a pontuação do Lighthouse só se vocês a rodarem.</i></td></tr>
+<tr><td>Quais heurísticas vocês não atenderam totalmente?</td><td>Flexibilidade (faltam atalhos de teclado) e ajuda e documentação (falta tela de ajuda). Assumir isso com clareza costuma ser bem recebido.</td></tr>
+<tr><td>O que o teste de usabilidade mudou?</td><td><i>Responda com o achado real do grupo.</i> Exemplo de formato: "Dois de cinco participantes não acharam o botão X; mudamos para Y."</td></tr>
+</table>
+
+<h2>12. Limitações conhecidas</h2>
+<ul>
+<li>Uso pessoal: sem contas, sem sincronização entre dispositivos.</li>
+<li>Notificações só funcionam com o navegador aberto; não há envio com o app fechado.</li>
+<li>O service worker atualiza em segundo plano: depois de uma mudança no código, a versão nova aparece no recarregamento seguinte.</li>
+<li>O app não foi testado em Safari nem em navegadores antigos; foi testado em Edge (motor Chromium).</li>
+<li>Lighthouse, leitor de tela e teste de usabilidade com pessoas ainda não foram feitos.</li>
+</ul>
+
+<h2>13. Mapa dos arquivos</h2>
+<table>
+<tr><th style="width:30%">Arquivo</th><th>Função</th></tr>
+<tr><td><code>index.html</code></td><td>Estrutura das telas e diálogos.</td></tr>
+<tr><td><code>css/style.css</code></td><td>Visual, temas, transições, responsividade, alto contraste.</td></tr>
+<tr><td><code>js/app.js</code></td><td>Lógica: estado, telas, persistência, perfil, desfazer, lembretes.</td></tr>
+<tr><td><code>server.js</code>, <code>iniciar.bat</code></td><td>Servidor local e atalho de inicialização.</td></tr>
+<tr><td><code>sw.js</code>, <code>manifest.webmanifest</code></td><td>Modo offline e instalação como aplicativo.</td></tr>
+<tr><td><code>public/logo.svg</code></td><td>Logo e ícone.</td></tr>
+<tr><td><code>data/db.json</code></td><td>Dados do usuário (criado ao usar; não vai para o repositório).</td></tr>
+<tr><td><code>registro.md</code></td><td>Transcrição de cada pedido e resposta da conversa de desenvolvimento.</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4338ca">
+<link rel="icon" type="image/svg+xml" href="public/logo.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Organizador Acadêmico Inteligente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+
+<!-- TELA DE BOAS-VINDAS / REGISTRO -->
+<div id="welcome" class="welcome" hidden>
+  <div class="welcome-card">
+    <img class="logo big" src="public/logo.svg" alt="" width="64" height="64">
+    <h1>Bem-vindo ao Organizador Acadêmico</h1>
+    <p class="lead">Planeje provas, trabalhos e tarefas em um só lugar. Vamos começar com o seu cadastro.</p>
+    <form id="form-welcome" autocomplete="off">
+      <label class="field">Seu nome
+        <input id="w-nome" required maxlength="40" placeholder="Ex.: Maria Silva" autofocus>
+      </label>
+      <label class="field"><span>Curso <span class="opt">(opcional)</span></span>
+        <input id="w-curso" maxlength="50" placeholder="Ex.: Engenharia de Software">
+      </label>
+      <label class="field">Primeiro, escolha um tema
+        <div class="seg" role="radiogroup" aria-label="Tema">
+          <label><input type="radio" name="w-tema" value="claro" checked><span>☀ Claro</span></label>
+          <label><input type="radio" name="w-tema" value="escuro"><span>☾ Escuro</span></label>
+        </div>
+      </label>
+      <button class="btn primary lg" type="submit">Começar</button>
+      <button class="btn ghost" type="button" id="w-demo">Entrar com dados de exemplo</button>
+    </form>
+    <p class="fine" id="w-fine">Seus dados ficam salvos neste navegador.</p>
+  </div>
+</div>
+
+<div id="app" hidden>
+<header class="topbar">
+  <div class="brand"><img class="logo" src="public/logo.svg" alt="" width="36" height="36"><span class="brand-t">Organizador</span></div>
+  <nav aria-label="Seções" id="tabs">
+    <button data-view="painel" aria-current="page"><i aria-hidden="true">▦</i><span>Painel</span></button>
+    <button data-view="calendario"><i aria-hidden="true">▤</i><span>Calendário</span></button>
+    <button data-view="atividades"><i aria-hidden="true">✓</i><span>Atividades</span></button>
+    <button data-view="disciplinas"><i aria-hidden="true">◈</i><span>Disciplinas</span></button>
+  </nav>
+  <div class="actions">
+    <button class="btn primary" id="btn-nova"><span aria-hidden="true">＋</span> <span class="hide-sm">Nova atividade</span></button>
+    <button class="avatar" id="btn-perfil" aria-label="Abrir perfil" title="Perfil"></button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <!-- PAINEL -->
+  <section id="view-painel" class="view" aria-labelledby="h-painel">
+    <div class="hero">
+      <div>
+        <p class="hero-sub" id="hero-data"></p>
+        <h2 id="h-painel"></h2>
+        <p class="hero-msg" id="hero-msg"></p>
+      </div>
+      <button class="btn light" id="hero-add">Planejar algo</button>
+    </div>
+    <div class="lembretes" id="lembretes" role="region" aria-label="Lembretes de prazo" hidden></div>
+    <div class="cards" id="cards"></div>
+    <div class="panel progress-wrap">
+      <div class="progress-top"><label for="bar">Progresso geral</label><strong id="prog-txt">0%</strong></div>
+      <div class="bar" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="bar-fill"></i></div>
+    </div>
+    <div class="grid2">
+      <div>
+        <h3>Próximos prazos</h3>
+        <ul class="list" id="proximos"></ul>
+      </div>
+      <div>
+        <h3>Atrasadas</h3>
+        <ul class="list" id="atrasadas"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDARIO -->
+  <section id="view-calendario" class="view" hidden aria-labelledby="h-cal">
+    <div class="cal-head">
+      <button class="btn icon" id="cal-prev" aria-label="Mês anterior">‹</button>
+      <h2 id="h-cal"></h2>
+      <button class="btn icon" id="cal-next" aria-label="Próximo mês">›</button>
+      <button class="btn" id="cal-hoje">Hoje</button>
+    </div>
+    <div class="cal" id="cal"></div>
+    <h3 id="dia-titulo">Selecione um dia</h3>
+    <ul class="list" id="dia-lista"></ul>
+  </section>
+
+  <!-- ATIVIDADES -->
+  <section id="view-atividades" class="view" hidden aria-labelledby="h-ativ">
+    <h2 class="page-t" id="h-ativ">Atividades</h2>
+    <div class="filters">
+      <input type="search" id="f-busca" placeholder="🔍 Buscar por título" aria-label="Buscar por título">
+      <select id="f-disc" aria-label="Filtrar por disciplina"></select>
+      <select id="f-tipo" aria-label="Filtrar por tipo">
+        <option value="">Todos os tipos</option>
+        <option value="prova">Prova</option>
+        <option value="trabalho">Trabalho</option>
+        <option value="tarefa">Tarefa</option>
+      </select>
+      <select id="f-status" aria-label="Filtrar por status">
+        <option value="">Todos</option>
+        <option value="pendente">Pendentes</option>
+        <option value="concluida">Concluídas</option>
+      </select>
+      <select id="f-ordem" aria-label="Ordenar">
+        <option value="inteligente">Ordem inteligente</option>
+        <option value="prazo">Por prazo</option>
+        <option value="prioridade">Por prioridade</option>
+      </select>
+    </div>
+    <ul class="list" id="lista-ativ"></ul>
+  </section>
+
+  <!-- DISCIPLINAS -->
+  <section id="view-disciplinas" class="view" hidden aria-labelledby="h-disc">
+    <h2 class="page-t" id="h-disc">Disciplinas</h2>
+    <form id="form-disc" class="inline-form panel">
+      <input id="d-nome" required maxlength="60" placeholder="Nome da disciplina" aria-label="Nome da disciplina">
+      <input id="d-cor" type="color" value="#6366f1" aria-label="Cor da disciplina">
+      <button class="btn primary" type="submit">Adicionar</button>
+    </form>
+    <ul class="list" id="lista-disc"></ul>
+  </section>
+</main>
+</div>
+
+<!-- MODAL ATIVIDADE -->
+<dialog id="modal" aria-labelledby="m-titulo">
+  <form id="form-ativ" method="dialog">
+    <h2 id="m-titulo">Nova atividade</h2>
+    <input type="hidden" id="a-id">
+    <label class="field">Título <input id="a-titulo" required maxlength="100"></label>
+    <label class="field">Disciplina <select id="a-disc" required></select></label>
+    <div class="row">
+      <label class="field">Tipo
+        <select id="a-tipo">
+          <option value="prova">Prova</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="tarefa" selected>Tarefa</option>
+        </select>
+      </label>
+      <label class="field">Prioridade
+        <select id="a-prio">
+          <option value="1">Baixa</option>
+          <option value="2" selected>Média</option>
+          <option value="3">Alta</option>
+        </select>
+      </label>
+    </div>
+    <label class="field">Prazo <input id="a-prazo" type="date" required></label>
+    <label class="field">Observações <textarea id="a-obs" rows="2" maxlength="300"></textarea></label>
+    <div class="row end">
+      <button class="btn" type="button" id="m-cancel">Cancelar</button>
+      <button class="btn primary" type="submit">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- MODAL PERFIL -->
+<dialog id="modal-perfil" aria-labelledby="p-titulo">
+  <form id="form-perfil" method="dialog">
+    <h2 id="p-titulo">Seu perfil</h2>
+    <label class="field">Nome <input id="p-nome" required maxlength="40"></label>
+    <label class="field">Curso <input id="p-curso" maxlength="50"></label>
+    <label class="field">Tema
+      <div class="seg" role="radiogroup" aria-label="Tema">
+        <label><input type="radio" name="p-tema" value="claro"><span>☀ Claro</span></label>
+        <label><input type="radio" name="p-tema" value="escuro"><span>☾ Escuro</span></label>
+      </div>
+    </label>
+    <div class="field">Tamanho do texto
+      <div class="seg" role="radiogroup" aria-label="Tamanho do texto">
+        <label><input type="radio" name="p-fonte" value="100"><span>Normal</span></label>
+        <label><input type="radio" name="p-fonte" value="115"><span>Grande</span></label>
+        <label><input type="radio" name="p-fonte" value="130"><span>Muito grande</span></label>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="p-contraste"> Alto contraste</label>
+    <label class="check"><input type="checkbox" id="p-notif"> Avisar sobre prazos de hoje e amanhã (notificação do navegador)</label>
+    <div class="field">Seus dados
+      <p class="store" id="p-store"></p>
+      <div class="row">
+        <button class="btn sm" type="button" id="p-export">Exportar backup</button>
+        <button class="btn sm" type="button" id="p-import">Importar backup</button>
+        <input type="file" id="p-file" accept="application/json,.json" hidden>
+      </div>
+    </div>
+    <div class="row end">
+      <button class="btn danger" type="button" id="p-reset">Apagar tudo e sair</button>
+      <button class="btn" type="button" id="p-cancel">Cancelar</button>
+      <button class="btn primary" type="submit">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="js/app.js"></script>
+</body>
+</html>

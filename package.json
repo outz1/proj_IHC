@@ -1,0 +1,7 @@
+{
+  "name": "organizador-academico",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Organizador Acadêmico Inteligente (IHC, UFG)",
+  "scripts": { "start": "node server.js" }
+}

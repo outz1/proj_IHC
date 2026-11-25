@@ -1,0 +1,14 @@
+{
+  "name": "Organizador Acadêmico Inteligente",
+  "short_name": "Organizador",
+  "description": "Disciplinas, provas, trabalhos e prazos em um só lugar.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1e1b4b",
+  "theme_color": "#4338ca",
+  "icons": [
+    { "src": "public/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
