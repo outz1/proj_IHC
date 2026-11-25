@@ -56,7 +56,7 @@ docs/img/                capturas de tela
 relatorio.pdf            relatório de apoio à apresentação
 registro.md              transcrição dos pedidos e respostas do desenvolvimento
 iniciar.bat              atalho para iniciar no Windows
-```
+
 
 ## API local
 
@@ -88,4 +88,6 @@ Integrantes:
 - Eduardo de Brito
 - Rian Santana
 - Marcos Paulo Caetano
+
+---
 Disciplina de IHC, Prof. Dirson S. Campos, UFG.
