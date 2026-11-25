@@ -107,3 +107,12 @@ Sugestões priorizadas, sem alteração de código.
 
 ### Output 8
 - A sombra do card de saudação do painel (`.hero`) passou de `0 18px 40px -18px #4f46e5` (brilho roxo vivo e largo) para `0 8px 20px -12px rgba(79,70,229,.4)`: menor, mais próxima e com 40% de opacidade.
+
+## Interação 9: espaçamento abaixo do card principal
+
+### Prompt 9
+> aumente o margin bottom desse card por que no modo escuro a UI/UX nao está agradavel, o card principal fica muito perto dos outros mini cards
+
+### Output 9
+- `margin-bottom` do card principal (`.hero`) de 16px para 28px, separando-o dos mini cards de contagem.
+- O bloco de lembretes, que fica entre os dois quando existe, passou de 14px para 24px, para o ritmo vertical ficar parecido com e sem lembretes.
