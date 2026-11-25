@@ -99,3 +99,11 @@ Sugestões priorizadas, sem alteração de código.
 - README reformatado: cabeçalho centralizado com logo e selos, índice de navegação, galeria de capturas de tela, tabelas, árvore de arquivos, avisos e emojis nos títulos. O bloco de código da estrutura estava sem o fechamento e quebrava a página; foi corrigido.
 - Mantidos os integrantes que o usuário preencheu (removidos apenas um apóstrofo e pontos e vírgulas soltos). O selo de acessibilidade foi descrito sem alegar conformidade WCAG, pois não houve auditoria.
 - Commit novo sobre o histórico já publicado (sem reescrever nada no remoto) e enviado com `git push origin main`.
+
+## Interação 8: suavizar o brilho do card principal
+
+### Prompt 8
+> Diminua um pouco o neon com shadow do card principal
+
+### Output 8
+- A sombra do card de saudação do painel (`.hero`) passou de `0 18px 40px -18px #4f46e5` (brilho roxo vivo e largo) para `0 8px 20px -12px rgba(79,70,229,.4)`: menor, mais próxima e com 40% de opacidade.
