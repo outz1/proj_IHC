@@ -89,3 +89,13 @@ Sugestões priorizadas, sem alteração de código.
 ### Output 6
 - Criado `README.md` com descrição, funcionalidades, como executar (`iniciar.bat`, `node server.js`, `npm start`), onde ficam os dados, estrutura de arquivos, API local, tecnologias, documentação, limitações e autoria (integrantes a preencher).
 - O commit único local foi atualizado (amend) para incluir o README e este registro, mantendo um só push.
+
+## Interação 7: formatação do README e push
+
+### Prompt 7
+> Formate o readme.md melhor para mim por favor e pode fazer o push direto ja
+
+### Output 7
+- README reformatado: cabeçalho centralizado com logo e selos, índice de navegação, galeria de capturas de tela, tabelas, árvore de arquivos, avisos e emojis nos títulos. O bloco de código da estrutura estava sem o fechamento e quebrava a página; foi corrigido.
+- Mantidos os integrantes que o usuário preencheu (removidos apenas um apóstrofo e pontos e vírgulas soltos). O selo de acessibilidade foi descrito sem alegar conformidade WCAG, pois não houve auditoria.
+- Commit novo sobre o histórico já publicado (sem reescrever nada no remoto) e enviado com `git push origin main`.
